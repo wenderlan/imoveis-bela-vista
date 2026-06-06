@@ -56,6 +56,34 @@
   .btn-ver { color: #fff; text-decoration: none; padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; transition: opacity .2s; }
   .btn-ver:hover { opacity: 0.85; }
 
+  /* Status de contato */
+  .status-bar { border-top: 1px solid #f1f5f9; margin-top: 10px; padding-top: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .status-label { font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .status-btns { display: flex; gap: 5px; flex-wrap: wrap; }
+  .sbtn { border: 1.5px solid #e2e8f0; background: #f8fafc; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .sbtn:hover { border-color: #94a3b8; background: #f1f5f9; }
+  .sbtn.ativo-contato      { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; font-weight: 700; }
+  .sbtn.ativo-interesse    { background: #dcfce7; border-color: #16a34a; color: #15803d; font-weight: 700; }
+  .sbtn.ativo-sem_interesse{ background: #fee2e2; border-color: #dc2626; color: #b91c1c; font-weight: 700; }
+
+  /* Nota */
+  .nota-area { margin-top: 8px; display: flex; gap: 6px; }
+  .nota-input { flex: 1; border: 1.5px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; font-size: 12px; font-family: inherit; resize: none; outline: none; }
+  .nota-input:focus { border-color: #3b82f6; }
+  .nota-salvar { background: #3b82f6; color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .nota-salvar:hover { background: #2563eb; }
+  .nota-view { margin-top: 6px; font-size: 12px; color: #475569; background: #f8fafc; border-radius: 6px; padding: 6px 10px; display: none; border-left: 3px solid #cbd5e1; }
+
+  /* Overlay de status no card */
+  .card[data-status="interesse"]     { border: 2px solid #16a34a; }
+  .card[data-status="sem_interesse"] { border: 2px solid #dc2626; opacity: .7; }
+  .card[data-status="contato"]       { border: 2px solid #3b82f6; }
+
+  /* Filtro de status no header */
+  .status-filtros { display: flex; gap: 6px; align-items: center; }
+  .sfiltro { border: 1.5px solid #e2e8f0; background: #fff; border-radius: 20px; padding: 4px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .sfiltro.ativo { background: #0f172a; border-color: #0f172a; color: #fff; }
+
   /* Vazio */
   .vazio { text-align: center; padding: 60px 24px; color: #94a3b8; font-size: 15px; display: none; }
   .count-info { text-align: center; padding: 8px; color: #64748b; font-size: 13px; }
@@ -66,7 +94,7 @@
 <div class="header">
   <div class="header-left">
     <h1>Imóveis OLX — Bela Vista de Goiás</h1>
-    <p>Atualizado em 06/06/2026 13:02</p>
+    <p>Atualizado em 06/06/2026 13:08</p>
   </div>
   <div class="header-right">
     <span class='db-info'>Total no banco: 71 imóveis</span>
@@ -80,13 +108,20 @@
     <button class="btn-todos filtro ativo" data-cat="todos">Todos</button>
     <button class="filtro" data-cat="Terrenos, sítios e fazendas">🌾 Terrenos, sítios e fazendas <span class="filtro-n">51</span></button><button class="filtro" data-cat="Casas">🏠 Casas <span class="filtro-n">15</span></button><button class="filtro" data-cat="Comércio e indústria">📋 Comércio e indústria <span class="filtro-n">3</span></button><button class="filtro" data-cat="Apartamentos">🏢 Apartamentos <span class="filtro-n">2</span></button>
   </div>
+  <div class="status-filtros">
+    <button class="sfiltro ativo" data-sf="todos">Todos</button>
+    <button class="sfiltro" data-sf="pendente">Sem contato</button>
+    <button class="sfiltro" data-sf="contato">📞 Contatados</button>
+    <button class="sfiltro" data-sf="interesse">✅ Com interesse</button>
+    <button class="sfiltro" data-sf="sem_interesse">❌ Sem interesse</button>
+  </div>
 </div>
 
 <p class="count-info" id="count-info">Exibindo 71 de 71 imóveis</p>
 
 <div class="grid" id="grid">
   
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1508111722" id="card-1508111722">
   <div class="card-header" style="background:#059669">
     <span class="card-num">1</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -101,13 +136,24 @@
     <div class="badges"></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 6.600.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-12-alqueires-em-bela-vista-de-goias-1508111722" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-12-alqueires-em-bela-vista-de-goias-1508111722" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1508111722">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1508111722" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1508111722" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1508111722" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1508111722" style="display:none">
+      <textarea class="nota-input" id="nota-1508111722" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1508111722">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1508111722"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1498009012" id="card-1498009012">
   <div class="card-header" style="background:#059669">
     <span class="card-num">2</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -122,13 +168,24 @@
     <div class="badges"><span class="badge">📐 1965m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 220.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-condominio-reserva-das-aroeiras-1498009012" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-condominio-reserva-das-aroeiras-1498009012" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1498009012">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1498009012" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1498009012" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1498009012" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1498009012" style="display:none">
+      <textarea class="nota-input" id="nota-1498009012" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1498009012">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1498009012"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1443162281" id="card-1443162281">
   <div class="card-header" style="background:#059669">
     <span class="card-num">3</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -143,13 +200,24 @@
     <div class="badges"><span class="badge">📐 2000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 1.500.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-um-sitio-no-municipio-de-bela-vista-de-goias-1443162281" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-um-sitio-no-municipio-de-bela-vista-de-goias-1443162281" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1443162281">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1443162281" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1443162281" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1443162281" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1443162281" style="display:none">
+      <textarea class="nota-input" id="nota-1443162281" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1443162281">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1443162281"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1507394057" id="card-1507394057">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">4</span>
     <span class="card-cat">🏠 Casas</span>
@@ -164,13 +232,24 @@
     <div class="badges"><span class="badge">📐 119m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 2 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 480.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/linda-casa-nova-para-pessoas-exigentes-1507394057" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/linda-casa-nova-para-pessoas-exigentes-1507394057" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1507394057">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1507394057" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1507394057" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1507394057" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1507394057" style="display:none">
+      <textarea class="nota-input" id="nota-1507394057" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1507394057">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1507394057"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1507372703" id="card-1507372703">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">5</span>
     <span class="card-cat">🏠 Casas</span>
@@ -185,13 +264,24 @@
     <div class="badges"><span class="badge">📐 118m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 2 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 520.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/vendo-casa-nova-no-setor-parque-dos-buritis-1507372703" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/vendo-casa-nova-no-setor-parque-dos-buritis-1507372703" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1507372703">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1507372703" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1507372703" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1507372703" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1507372703" style="display:none">
+      <textarea class="nota-input" id="nota-1507372703" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1507372703">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1507372703"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1507160529" id="card-1507160529">
   <div class="card-header" style="background:#059669">
     <span class="card-num">6</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -206,13 +296,24 @@
     <div class="badges"></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 380.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-lote-cond-gran-lago-1507160529" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-lote-cond-gran-lago-1507160529" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1507160529">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1507160529" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1507160529" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1507160529" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1507160529" style="display:none">
+      <textarea class="nota-input" id="nota-1507160529" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1507160529">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1507160529"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1259908856" id="card-1259908856">
   <div class="card-header" style="background:#059669">
     <span class="card-num">7</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -227,13 +328,24 @@
     <div class="badges"><span class="badge">📐 20000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 795.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-de-goias-troco-escriturado-analisa-permuta-1259908856" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-de-goias-troco-escriturado-analisa-permuta-1259908856" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1259908856">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1259908856" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1259908856" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1259908856" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1259908856" style="display:none">
+      <textarea class="nota-input" id="nota-1259908856" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1259908856">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1259908856"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1504795086" id="card-1504795086">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">8</span>
     <span class="card-cat">🏠 Casas</span>
@@ -248,13 +360,24 @@
     <div class="badges"><span class="badge">📐 360m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 3 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 280.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-no-centro-de-bela-vista-otima-localizacao-1504795086" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-no-centro-de-bela-vista-otima-localizacao-1504795086" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1504795086">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1504795086" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1504795086" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1504795086" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1504795086" style="display:none">
+      <textarea class="nota-input" id="nota-1504795086" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1504795086">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1504795086"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1478387869" id="card-1478387869">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">9</span>
     <span class="card-cat">🏠 Casas</span>
@@ -269,13 +392,24 @@
     <div class="badges"><span class="badge">📐 94770m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 2 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 270.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/oportunidade-casa-reformada-com-suite-no-setor-sussuapara-aceita-financiamento-1478387869" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/oportunidade-casa-reformada-com-suite-no-setor-sussuapara-aceita-financiamento-1478387869" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1478387869">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1478387869" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1478387869" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1478387869" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1478387869" style="display:none">
+      <textarea class="nota-input" id="nota-1478387869" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1478387869">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1478387869"></div>
   </div>
 </div>
-<div class="card" data-cat="Comércio e indústria" data-tipo="">
+<div class="card" data-cat="Comércio e indústria" data-tipo="" data-id="1506390216" id="card-1506390216">
   <div class="card-header" style="background:#374151">
     <span class="card-num">10</span>
     <span class="card-cat">📋 Comércio e indústria</span>
@@ -290,13 +424,24 @@
     <div class="badges"><span class="badge">📐 16m²</span><span class="badge">🚗 0 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#374151">R$ 1.100</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/sala-comercial-50-metros-da-av-pedro-ludovico-1506390216" target="_blank" class="btn-ver" style="background:#374151">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/sala-comercial-50-metros-da-av-pedro-ludovico-1506390216" target="_blank" class="btn-ver" style="background:#374151">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1506390216">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1506390216" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1506390216" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1506390216" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1506390216" style="display:none">
+      <textarea class="nota-input" id="nota-1506390216" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1506390216">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1506390216"></div>
   </div>
 </div>
-<div class="card" data-cat="Comércio e indústria" data-tipo="">
+<div class="card" data-cat="Comércio e indústria" data-tipo="" data-id="1506389129" id="card-1506389129">
   <div class="card-header" style="background:#374151">
     <span class="card-num">11</span>
     <span class="card-cat">📋 Comércio e indústria</span>
@@ -311,13 +456,24 @@
     <div class="badges"><span class="badge">📐 16m²</span><span class="badge">🚗 0 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#374151">R$ 1.100</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/aluguel-de-sala-comercial-1506389129" target="_blank" class="btn-ver" style="background:#374151">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/aluguel-de-sala-comercial-1506389129" target="_blank" class="btn-ver" style="background:#374151">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1506389129">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1506389129" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1506389129" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1506389129" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1506389129" style="display:none">
+      <textarea class="nota-input" id="nota-1506389129" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1506389129">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1506389129"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1506363484" id="card-1506363484">
   <div class="card-header" style="background:#059669">
     <span class="card-num">12</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -332,13 +488,24 @@
     <div class="badges"><span class="badge">📐 363000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 4.900.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/sitio-para-lazer-e-ganhar-dinheiro-1506363484" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/sitio-para-lazer-e-ganhar-dinheiro-1506363484" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1506363484">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1506363484" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1506363484" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1506363484" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1506363484" style="display:none">
+      <textarea class="nota-input" id="nota-1506363484" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1506363484">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1506363484"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1506098592" id="card-1506098592">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">13</span>
     <span class="card-cat">🏠 Casas</span>
@@ -353,13 +520,24 @@
     <div class="badges"><span class="badge">📐 33000m²</span><span class="badge">🛏 1 quartos</span><span class="badge">🚿 1 banh.</span><span class="badge">🚗 5 ou mais vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 1.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/alugo-e-ou-vendo-chacara-1506098592" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/alugo-e-ou-vendo-chacara-1506098592" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1506098592">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1506098592" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1506098592" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1506098592" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1506098592" style="display:none">
+      <textarea class="nota-input" id="nota-1506098592" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1506098592">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1506098592"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1505929711" id="card-1505929711">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">14</span>
     <span class="card-cat">🏠 Casas</span>
@@ -374,13 +552,24 @@
     <div class="badges"><span class="badge">🛏 4 quartos</span><span class="badge">🚿 4 banh.</span><span class="badge">🚗 2 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 1.800.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/excelente-oportunidade-de-investimento-na-avenida-principal-da-cidade-1505929711" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/excelente-oportunidade-de-investimento-na-avenida-principal-da-cidade-1505929711" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1505929711">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1505929711" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1505929711" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1505929711" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1505929711" style="display:none">
+      <textarea class="nota-input" id="nota-1505929711" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1505929711">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1505929711"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1505806098" id="card-1505806098">
   <div class="card-header" style="background:#059669">
     <span class="card-num">15</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -395,13 +584,24 @@
     <div class="badges"><span class="badge">📐 6000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 180.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/venda-uma-linda-chacaras-1505806098" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/venda-uma-linda-chacaras-1505806098" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1505806098">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1505806098" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1505806098" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1505806098" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1505806098" style="display:none">
+      <textarea class="nota-input" id="nota-1505806098" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1505806098">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1505806098"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1505803592" id="card-1505803592">
   <div class="card-header" style="background:#059669">
     <span class="card-num">16</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -416,13 +616,24 @@
     <div class="badges"><span class="badge">📐 300m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 20.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-agio-lote-localizado-em-bela-vista-de-goias-1505803592" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-agio-lote-localizado-em-bela-vista-de-goias-1505803592" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1505803592">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1505803592" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1505803592" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1505803592" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1505803592" style="display:none">
+      <textarea class="nota-input" id="nota-1505803592" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1505803592">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1505803592"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1505067587" id="card-1505067587">
   <div class="card-header" style="background:#059669">
     <span class="card-num">17</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -437,13 +648,24 @@
     <div class="badges"><span class="badge">📐 1504m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 350.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-ou-troca-lote-em-cond-fechado-de-sitios-aceito-sitio-ou-fazenda-no-interior-1505067587" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-ou-troca-lote-em-cond-fechado-de-sitios-aceito-sitio-ou-fazenda-no-interior-1505067587" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1505067587">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1505067587" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1505067587" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1505067587" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1505067587" style="display:none">
+      <textarea class="nota-input" id="nota-1505067587" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1505067587">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1505067587"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1504856949" id="card-1504856949">
   <div class="card-header" style="background:#059669">
     <span class="card-num">18</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -458,13 +680,24 @@
     <div class="badges"><span class="badge">📐 600m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 60.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-a-venda-1504856949" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-a-venda-1504856949" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1504856949">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1504856949" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1504856949" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1504856949" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1504856949" style="display:none">
+      <textarea class="nota-input" id="nota-1504856949" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1504856949">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1504856949"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1504753598" id="card-1504753598">
   <div class="card-header" style="background:#059669">
     <span class="card-num">19</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -479,13 +712,24 @@
     <div class="badges"><span class="badge">📐 268m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 100.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-agio-solaris-laguna-go-020-1504753598" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-agio-solaris-laguna-go-020-1504753598" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1504753598">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1504753598" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1504753598" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1504753598" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1504753598" style="display:none">
+      <textarea class="nota-input" id="nota-1504753598" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1504753598">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1504753598"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1504054635" id="card-1504054635">
   <div class="card-header" style="background:#059669">
     <span class="card-num">20</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -500,13 +744,24 @@
     <div class="badges"><span class="badge">📐 2300m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 290.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-proximo-centro-de-bela-vista-1504054635" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-proximo-centro-de-bela-vista-1504054635" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1504054635">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1504054635" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1504054635" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1504054635" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1504054635" style="display:none">
+      <textarea class="nota-input" id="nota-1504054635" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1504054635">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1504054635"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1504019442" id="card-1504019442">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">21</span>
     <span class="card-cat">🏠 Casas</span>
@@ -521,13 +776,24 @@
     <div class="badges"><span class="badge">📐 173m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 3 banh.</span><span class="badge">🚗 4 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 890.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-de-alto-padrao-em-bela-vista-de-goias-1504019442" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-de-alto-padrao-em-bela-vista-de-goias-1504019442" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1504019442">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1504019442" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1504019442" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1504019442" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1504019442" style="display:none">
+      <textarea class="nota-input" id="nota-1504019442" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1504019442">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1504019442"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas" data-id="1503582402" id="card-1503582402">
   <div class="card-header" style="background:#059669">
     <span class="card-num">22</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -542,13 +808,24 @@
     <div class="badges"><span class="badge">📐 630000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 7.000.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-13-alqueires-30min-de-goiania-1503582402" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-13-alqueires-30min-de-goiania-1503582402" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1503582402">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1503582402" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1503582402" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1503582402" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1503582402" style="display:none">
+      <textarea class="nota-input" id="nota-1503582402" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1503582402">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1503582402"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Aluguel - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Aluguel - casa em rua pública" data-id="1503057542" id="card-1503057542">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">23</span>
     <span class="card-cat">🏠 Casas</span>
@@ -563,13 +840,24 @@
     <div class="badges"><span class="badge">🛏 3 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 3 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 1.500</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/aluga-se-casa-de-3-4-residencial-sussuapara-bela-vista-de-goias-1503057542" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/aluga-se-casa-de-3-4-residencial-sussuapara-bela-vista-de-goias-1503057542" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1503057542">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1503057542" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1503057542" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1503057542" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1503057542" style="display:none">
+      <textarea class="nota-input" id="nota-1503057542" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1503057542">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1503057542"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1490462956" id="card-1490462956">
   <div class="card-header" style="background:#059669">
     <span class="card-num">24</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -584,13 +872,24 @@
     <div class="badges"><span class="badge">📐 898m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 60.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/agio-fazenda-lumiar-1490462956" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/agio-fazenda-lumiar-1490462956" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1490462956">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1490462956" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1490462956" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1490462956" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1490462956" style="display:none">
+      <textarea class="nota-input" id="nota-1490462956" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1490462956">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1490462956"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1502733655" id="card-1502733655">
   <div class="card-header" style="background:#059669">
     <span class="card-num">25</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -605,13 +904,24 @@
     <div class="badges"><span class="badge">📐 5000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 1.200.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-proximo-a-goiania-1502733655" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-proximo-a-goiania-1502733655" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1502733655">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1502733655" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1502733655" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1502733655" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1502733655" style="display:none">
+      <textarea class="nota-input" id="nota-1502733655" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1502733655">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1502733655"></div>
   </div>
 </div>
-<div class="card" data-cat="Apartamentos" data-tipo="Aluguel - apartamento padrão">
+<div class="card" data-cat="Apartamentos" data-tipo="Aluguel - apartamento padrão" data-id="961283483" id="card-961283483">
   <div class="card-header" style="background:#7c3aed">
     <span class="card-num">26</span>
     <span class="card-cat">🏢 Apartamentos</span>
@@ -626,13 +936,24 @@
     <div class="badges"><span class="badge">📐 55m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 1 banh.</span><span class="badge">🚗 1 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#7c3aed">R$ 600</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/apartamentos-no-perola-a-5-minutos-da-empresa-piracanjuba-de-bela-vista-961283483" target="_blank" class="btn-ver" style="background:#7c3aed">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/apartamentos-no-perola-a-5-minutos-da-empresa-piracanjuba-de-bela-vista-961283483" target="_blank" class="btn-ver" style="background:#7c3aed">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-961283483">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="961283483" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="961283483" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="961283483" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-961283483" style="display:none">
+      <textarea class="nota-input" id="nota-961283483" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="961283483">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-961283483"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1502086930" id="card-1502086930">
   <div class="card-header" style="background:#059669">
     <span class="card-num">27</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -647,13 +968,24 @@
     <div class="badges"><span class="badge">📐 2467m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 210.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-recanto-dos-ipes-agio-210-mil-reais-bela-vista-de-goias-1502086930" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-recanto-dos-ipes-agio-210-mil-reais-bela-vista-de-goias-1502086930" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1502086930">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1502086930" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1502086930" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1502086930" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1502086930" style="display:none">
+      <textarea class="nota-input" id="nota-1502086930" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1502086930">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1502086930"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1501840472" id="card-1501840472">
   <div class="card-header" style="background:#059669">
     <span class="card-num">28</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -668,13 +1000,24 @@
     <div class="badges"><span class="badge">📐 500m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 1.267.530</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/condominio-fazenda-lumiar-1501840472" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/condominio-fazenda-lumiar-1501840472" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1501840472">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1501840472" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1501840472" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1501840472" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1501840472" style="display:none">
+      <textarea class="nota-input" id="nota-1501840472" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1501840472">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1501840472"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila" data-id="1501706797" id="card-1501706797">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">29</span>
     <span class="card-cat">🏠 Casas</span>
@@ -689,13 +1032,24 @@
     <div class="badges"><span class="badge">📐 360m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 3 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 260.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-360-metros-1501706797" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-360-metros-1501706797" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1501706797">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1501706797" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1501706797" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1501706797" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1501706797" style="display:none">
+      <textarea class="nota-input" id="nota-1501706797" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1501706797">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1501706797"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1501441895" id="card-1501441895">
   <div class="card-header" style="background:#059669">
     <span class="card-num">30</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -710,13 +1064,24 @@
     <div class="badges"><span class="badge">📐 1815m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 120.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/oportunidade-1501441895" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/oportunidade-1501441895" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1501441895">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1501441895" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1501441895" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1501441895" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1501441895" style="display:none">
+      <textarea class="nota-input" id="nota-1501441895" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1501441895">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1501441895"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1501058958" id="card-1501058958">
   <div class="card-header" style="background:#059669">
     <span class="card-num">31</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -731,13 +1096,24 @@
     <div class="badges"><span class="badge">📐 3000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 200.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-em-roselandia-1501058958" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-em-roselandia-1501058958" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1501058958">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1501058958" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1501058958" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1501058958" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1501058958" style="display:none">
+      <textarea class="nota-input" id="nota-1501058958" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1501058958">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1501058958"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1342543570" id="card-1342543570">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">32</span>
     <span class="card-cat">🏠 Casas</span>
@@ -752,13 +1128,24 @@
     <div class="badges"><span class="badge">🛏 3 quartos</span><span class="badge">🚿 1 banh.</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 450.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-no-centro-bela-vista-de-goias-1342543570" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-no-centro-bela-vista-de-goias-1342543570" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1342543570">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1342543570" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1342543570" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1342543570" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1342543570" style="display:none">
+      <textarea class="nota-input" id="nota-1342543570" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1342543570">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1342543570"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1342535263" id="card-1342535263">
   <div class="card-header" style="background:#059669">
     <span class="card-num">33</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -773,13 +1160,24 @@
     <div class="badges"><span class="badge">📐 2306m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 290.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/linda-chacara-com-agua-no-parque-las-vegas-1342535263" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/linda-chacara-com-agua-no-parque-las-vegas-1342535263" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1342535263">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1342535263" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1342535263" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1342535263" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1342535263" style="display:none">
+      <textarea class="nota-input" id="nota-1342535263" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1342535263">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1342535263"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1450287321" id="card-1450287321">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">34</span>
     <span class="card-cat">🏠 Casas</span>
@@ -794,13 +1192,24 @@
     <div class="badges"><span class="badge">📐 2700m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 1 banh.</span><span class="badge">🚗 5 ou mais vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 370.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/chacara-venda-bela-vista-de-goias-1450287321" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/chacara-venda-bela-vista-de-goias-1450287321" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1450287321">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1450287321" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1450287321" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1450287321" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1450287321" style="display:none">
+      <textarea class="nota-input" id="nota-1450287321" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1450287321">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1450287321"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1500079952" id="card-1500079952">
   <div class="card-header" style="background:#059669">
     <span class="card-num">35</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -815,13 +1224,24 @@
     <div class="badges"><span class="badge">📐 2300m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 320.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-com-2300m2-corrego-nascente-bocainas-bela-vista-1500079952" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-com-2300m2-corrego-nascente-bocainas-bela-vista-1500079952" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1500079952">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1500079952" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1500079952" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1500079952" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1500079952" style="display:none">
+      <textarea class="nota-input" id="nota-1500079952" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1500079952">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1500079952"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499816677" id="card-1499816677">
   <div class="card-header" style="background:#059669">
     <span class="card-num">36</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -836,13 +1256,24 @@
     <div class="badges"><span class="badge">📐 1204m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 298.006</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/area-verde-de-1-200m-em-condominio-com-lago-e-seguranca-bela-vista-de-goias-1499816677" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/area-verde-de-1-200m-em-condominio-com-lago-e-seguranca-bela-vista-de-goias-1499816677" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499816677">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499816677" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499816677" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499816677" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499816677" style="display:none">
+      <textarea class="nota-input" id="nota-1499816677" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499816677">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499816677"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499808710" id="card-1499808710">
   <div class="card-header" style="background:#059669">
     <span class="card-num">37</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -857,13 +1288,24 @@
     <div class="badges"><span class="badge">📐 1202m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 298.003</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/terreno-1200m-condominio-fechado-a-30min-de-goiania-1499808710" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/terreno-1200m-condominio-fechado-a-30min-de-goiania-1499808710" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499808710">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499808710" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499808710" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499808710" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499808710" style="display:none">
+      <textarea class="nota-input" id="nota-1499808710" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499808710">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499808710"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1499805823" id="card-1499805823">
   <div class="card-header" style="background:#059669">
     <span class="card-num">38</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -878,13 +1320,24 @@
     <div class="badges"><span class="badge">📐 1201m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 298.001</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/area-verde-de-1-201m-em-condominio-fechado-seguranca-24h-e-via-duplicada-ate-na-porta-1499805823" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/area-verde-de-1-201m-em-condominio-fechado-seguranca-24h-e-via-duplicada-ate-na-porta-1499805823" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499805823">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499805823" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499805823" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499805823" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499805823" style="display:none">
+      <textarea class="nota-input" id="nota-1499805823" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499805823">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499805823"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas" data-id="1499718831" id="card-1499718831">
   <div class="card-header" style="background:#059669">
     <span class="card-num">39</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -899,13 +1352,24 @@
     <div class="badges"><span class="badge">📐 70m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 24.000.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-70-alqueires-extra-bela-vista-go-acesso-pela-go-20-1499718831" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-70-alqueires-extra-bela-vista-go-acesso-pela-go-20-1499718831" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499718831">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499718831" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499718831" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499718831" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499718831" style="display:none">
+      <textarea class="nota-input" id="nota-1499718831" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499718831">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499718831"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499634494" id="card-1499634494">
   <div class="card-header" style="background:#059669">
     <span class="card-num">40</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -920,13 +1384,24 @@
     <div class="badges"><span class="badge">📐 20000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 260.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-em-bela-vista-de-goias-1499634494" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-em-bela-vista-de-goias-1499634494" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499634494">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499634494" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499634494" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499634494" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499634494" style="display:none">
+      <textarea class="nota-input" id="nota-1499634494" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499634494">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499634494"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499191466" id="card-1499191466">
   <div class="card-header" style="background:#059669">
     <span class="card-num">41</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -941,13 +1416,24 @@
     <div class="badges"><span class="badge">📐 1500m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 120.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-1499191466" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-1499191466" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499191466">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499191466" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499191466" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499191466" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499191466" style="display:none">
+      <textarea class="nota-input" id="nota-1499191466" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499191466">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499191466"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499092863" id="card-1499092863">
   <div class="card-header" style="background:#059669">
     <span class="card-num">42</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -962,13 +1448,24 @@
     <div class="badges"></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 2.000.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-de-5-alqueires-1499092863" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-de-5-alqueires-1499092863" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499092863">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499092863" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499092863" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499092863" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499092863" style="display:none">
+      <textarea class="nota-input" id="nota-1499092863" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499092863">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499092863"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1499012764" id="card-1499012764">
   <div class="card-header" style="background:#059669">
     <span class="card-num">43</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -983,13 +1480,24 @@
     <div class="badges"><span class="badge">📐 1540m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 990.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-ou-alugo-chacara-portal-do-cerrado-1499012764" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-ou-alugo-chacara-portal-do-cerrado-1499012764" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1499012764">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1499012764" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1499012764" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1499012764" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1499012764" style="display:none">
+      <textarea class="nota-input" id="nota-1499012764" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1499012764">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1499012764"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1342548439" id="card-1342548439">
   <div class="card-header" style="background:#059669">
     <span class="card-num">44</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1004,13 +1512,24 @@
     <div class="badges"><span class="badge">📐 27500m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 429.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-27-500m2-prox-posto-sobrado-1342548439" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-27-500m2-prox-posto-sobrado-1342548439" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1342548439">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1342548439" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1342548439" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1342548439" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1342548439" style="display:none">
+      <textarea class="nota-input" id="nota-1342548439" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1342548439">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1342548439"></div>
   </div>
 </div>
-<div class="card" data-cat="Apartamentos" data-tipo="Venda - apartamento padrão">
+<div class="card" data-cat="Apartamentos" data-tipo="Venda - apartamento padrão" data-id="1496852626" id="card-1496852626">
   <div class="card-header" style="background:#7c3aed">
     <span class="card-num">45</span>
     <span class="card-cat">🏢 Apartamentos</span>
@@ -1025,13 +1544,24 @@
     <div class="badges"><span class="badge">📐 59m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 1 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#7c3aed">R$ 550.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/apartamento-02-quartos-wish-bella-vista-setor-bela-vista-goiania-1496852626" target="_blank" class="btn-ver" style="background:#7c3aed">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/apartamento-02-quartos-wish-bella-vista-setor-bela-vista-goiania-1496852626" target="_blank" class="btn-ver" style="background:#7c3aed">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1496852626">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1496852626" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1496852626" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1496852626" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1496852626" style="display:none">
+      <textarea class="nota-input" id="nota-1496852626" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1496852626">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1496852626"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1498207402" id="card-1498207402">
   <div class="card-header" style="background:#059669">
     <span class="card-num">46</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1046,13 +1576,24 @@
     <div class="badges"><span class="badge">📐 1800m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 250.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-village-recanto-da-mata-1498207402" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-village-recanto-da-mata-1498207402" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1498207402">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1498207402" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1498207402" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1498207402" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1498207402" style="display:none">
+      <textarea class="nota-input" id="nota-1498207402" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1498207402">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1498207402"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1497970152" id="card-1497970152">
   <div class="card-header" style="background:#059669">
     <span class="card-num">47</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1067,13 +1608,24 @@
     <div class="badges"><span class="badge">📐 300m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 115.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-lotes-em-bela-vista-de-goias-1497970152" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-lotes-em-bela-vista-de-goias-1497970152" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1497970152">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1497970152" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1497970152" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1497970152" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1497970152" style="display:none">
+      <textarea class="nota-input" id="nota-1497970152" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1497970152">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1497970152"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1497766183" id="card-1497766183">
   <div class="card-header" style="background:#059669">
     <span class="card-num">48</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1088,13 +1640,24 @@
     <div class="badges"><span class="badge">📐 6547m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 135.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-1497766183" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vende-se-chacara-1497766183" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1497766183">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1497766183" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1497766183" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1497766183" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1497766183" style="display:none">
+      <textarea class="nota-input" id="nota-1497766183" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1497766183">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1497766183"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila" data-id="1497414785" id="card-1497414785">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">49</span>
     <span class="card-cat">🏠 Casas</span>
@@ -1109,13 +1672,24 @@
     <div class="badges"><span class="badge">🛏 2 quartos</span><span class="badge">🚿 1 banh.</span><span class="badge">🚗 5 ou mais vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 1.400.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/vendo-chacara-1497414785" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/vendo-chacara-1497414785" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1497414785">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1497414785" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1497414785" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1497414785" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1497414785" style="display:none">
+      <textarea class="nota-input" id="nota-1497414785" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1497414785">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1497414785"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em rua pública" data-id="1497164532" id="card-1497164532">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">50</span>
     <span class="card-cat">🏠 Casas</span>
@@ -1130,13 +1704,24 @@
     <div class="badges"><span class="badge">📐 412m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 2 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 280.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/bela-vista-de-goias-casa-3-quartos-2-banheiros-sala-copa-cozinha-independente-area-gourmet-1497164532" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/bela-vista-de-goias-casa-3-quartos-2-banheiros-sala-copa-cozinha-independente-area-gourmet-1497164532" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1497164532">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1497164532" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1497164532" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1497164532" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1497164532" style="display:none">
+      <textarea class="nota-input" id="nota-1497164532" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1497164532">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1497164532"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1439851618" id="card-1439851618">
   <div class="card-header" style="background:#059669">
     <span class="card-num">51</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1151,13 +1736,24 @@
     <div class="badges"><span class="badge">📐 1633m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 620.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/go-020-sinta-se-no-meio-do-mato-chacara-em-condominio-fechado-recanto-da-mata-1439851618" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/go-020-sinta-se-no-meio-do-mato-chacara-em-condominio-fechado-recanto-da-mata-1439851618" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1439851618">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1439851618" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1439851618" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1439851618" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1439851618" style="display:none">
+      <textarea class="nota-input" id="nota-1439851618" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1439851618">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1439851618"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em vila" data-id="1496425291" id="card-1496425291">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">52</span>
     <span class="card-cat">🏠 Casas</span>
@@ -1172,13 +1768,24 @@
     <div class="badges"><span class="badge">📐 90m²</span><span class="badge">🛏 2 quartos</span><span class="badge">🚿 2 banh.</span><span class="badge">🚗 3 vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 150.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-na-vila-mata-feia-bela-vista-de-goias-1496425291" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-na-vila-mata-feia-bela-vista-de-goias-1496425291" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1496425291">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1496425291" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1496425291" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1496425291" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1496425291" style="display:none">
+      <textarea class="nota-input" id="nota-1496425291" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1496425291">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1496425291"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1474415257" id="card-1474415257">
   <div class="card-header" style="background:#059669">
     <span class="card-num">53</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1193,13 +1800,24 @@
     <div class="badges"><span class="badge">📐 20000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 390.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-prox-posto-sobrado-1474415257" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-prox-posto-sobrado-1474415257" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1474415257">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1474415257" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1474415257" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1474415257" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1474415257" style="display:none">
+      <textarea class="nota-input" id="nota-1474415257" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1474415257">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1474415257"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1495962702" id="card-1495962702">
   <div class="card-header" style="background:#059669">
     <span class="card-num">54</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1214,13 +1832,24 @@
     <div class="badges"><span class="badge">📐 1733m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 230.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-no-condominio-recanto-das-araras-recanto-da-mata-bela-vista-go-1495962702" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-no-condominio-recanto-das-araras-recanto-da-mata-bela-vista-go-1495962702" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1495962702">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1495962702" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1495962702" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1495962702" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1495962702" style="display:none">
+      <textarea class="nota-input" id="nota-1495962702" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1495962702">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1495962702"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1495666499" id="card-1495666499">
   <div class="card-header" style="background:#059669">
     <span class="card-num">55</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1235,13 +1864,24 @@
     <div class="badges"><span class="badge">📐 20000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 480.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-venda-roselandia-37-km-de-goiania-1495666499" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-venda-roselandia-37-km-de-goiania-1495666499" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1495666499">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1495666499" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1495666499" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1495666499" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1495666499" style="display:none">
+      <textarea class="nota-input" id="nota-1495666499" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1495666499">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1495666499"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1495415272" id="card-1495415272">
   <div class="card-header" style="background:#059669">
     <span class="card-num">56</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1256,13 +1896,24 @@
     <div class="badges"><span class="badge">📐 8000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 450.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-8-000m2-bela-vista-de-goias-1495415272" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-8-000m2-bela-vista-de-goias-1495415272" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1495415272">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1495415272" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1495415272" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1495415272" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1495415272" style="display:none">
+      <textarea class="nota-input" id="nota-1495415272" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1495415272">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1495415272"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1494709921" id="card-1494709921">
   <div class="card-header" style="background:#059669">
     <span class="card-num">57</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1277,13 +1928,24 @@
     <div class="badges"><span class="badge">📐 6000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 550.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-chacara-3km-de-bela-vista-de-goias-1494709921" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-chacara-3km-de-bela-vista-de-goias-1494709921" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1494709921">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1494709921" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1494709921" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1494709921" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1494709921" style="display:none">
+      <textarea class="nota-input" id="nota-1494709921" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1494709921">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1494709921"></div>
   </div>
 </div>
-<div class="card" data-cat="Casas" data-tipo="Venda - casa em condominio fechado">
+<div class="card" data-cat="Casas" data-tipo="Venda - casa em condominio fechado" data-id="1479965168" id="card-1479965168">
   <div class="card-header" style="background:#2563eb">
     <span class="card-num">58</span>
     <span class="card-cat">🏠 Casas</span>
@@ -1298,13 +1960,24 @@
     <div class="badges"><span class="badge">📐 2000m²</span><span class="badge">🛏 3 quartos</span><span class="badge">🚿 3 banh.</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#2563eb">R$ 850.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-condominio-das-palmeiras-bela-vista-de-goias-chacara-para-vender-ou-alugar-1479965168" target="_blank" class="btn-ver" style="background:#2563eb">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/imoveis/casa-condominio-das-palmeiras-bela-vista-de-goias-chacara-para-vender-ou-alugar-1479965168" target="_blank" class="btn-ver" style="background:#2563eb">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1479965168">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1479965168" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1479965168" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1479965168" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1479965168" style="display:none">
+      <textarea class="nota-input" id="nota-1479965168" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1479965168">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1479965168"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1494530270" id="card-1494530270">
   <div class="card-header" style="background:#059669">
     <span class="card-num">59</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1319,13 +1992,24 @@
     <div class="badges"><span class="badge">📐 230m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 78.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-setor-clotildes-bela-vista-de-goias-1494530270" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-setor-clotildes-bela-vista-de-goias-1494530270" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1494530270">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1494530270" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1494530270" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1494530270" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1494530270" style="display:none">
+      <textarea class="nota-input" id="nota-1494530270" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1494530270">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1494530270"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1494401449" id="card-1494401449">
   <div class="card-header" style="background:#059669">
     <span class="card-num">60</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1340,13 +2024,24 @@
     <div class="badges"><span class="badge">📐 2800m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 780.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/duas-chacara-condominio-residencial-villa-verde-1494401449" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/duas-chacara-condominio-residencial-villa-verde-1494401449" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1494401449">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1494401449" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1494401449" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1494401449" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1494401449" style="display:none">
+      <textarea class="nota-input" id="nota-1494401449" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1494401449">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1494401449"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1491822941" id="card-1491822941">
   <div class="card-header" style="background:#059669">
     <span class="card-num">61</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1361,13 +2056,24 @@
     <div class="badges"><span class="badge">📐 5000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 250.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-de-goias-1491822941" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/chacara-em-bela-vista-de-goias-1491822941" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1491822941">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1491822941" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1491822941" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1491822941" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1491822941" style="display:none">
+      <textarea class="nota-input" id="nota-1491822941" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1491822941">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1491822941"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1486014063" id="card-1486014063">
   <div class="card-header" style="background:#059669">
     <span class="card-num">62</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1382,13 +2088,24 @@
     <div class="badges"><span class="badge">📐 1425m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 300.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/recanto-dos-ipes-1486014063" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/recanto-dos-ipes-1486014063" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1486014063">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1486014063" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1486014063" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1486014063" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1486014063" style="display:none">
+      <textarea class="nota-input" id="nota-1486014063" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1486014063">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1486014063"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Sítios e chácaras" data-id="1493239032" id="card-1493239032">
   <div class="card-header" style="background:#059669">
     <span class="card-num">63</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1403,13 +2120,24 @@
     <div class="badges"><span class="badge">📐 20000m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 650.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-chacara-excelente-em-bela-vista-de-goias-1493239032" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/vendo-chacara-excelente-em-bela-vista-de-goias-1493239032" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1493239032">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1493239032" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1493239032" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1493239032" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1493239032" style="display:none">
+      <textarea class="nota-input" id="nota-1493239032" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1493239032">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1493239032"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Fazendas" data-id="1492959567" id="card-1492959567">
   <div class="card-header" style="background:#059669">
     <span class="card-num">64</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1424,13 +2152,24 @@
     <div class="badges"></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 12.000.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-de-145-2-hectares-1492959567" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/fazenda-de-145-2-hectares-1492959567" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492959567">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492959567" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492959567" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492959567" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492959567" style="display:none">
+      <textarea class="nota-input" id="nota-1492959567" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492959567">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492959567"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1492896160" id="card-1492896160">
   <div class="card-header" style="background:#059669">
     <span class="card-num">65</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1445,13 +2184,24 @@
     <div class="badges"><span class="badge">📐 525m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 110.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-condominio-fechado-1492896160" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-condominio-fechado-1492896160" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492896160">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492896160" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492896160" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492896160" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492896160" style="display:none">
+      <textarea class="nota-input" id="nota-1492896160" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492896160">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492896160"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1492778454" id="card-1492778454">
   <div class="card-header" style="background:#059669">
     <span class="card-num">66</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1466,13 +2216,24 @@
     <div class="badges"><span class="badge">📐 1540m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 300.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-no-condominio-portal-do-cerrado-1492778454" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-no-condominio-portal-do-cerrado-1492778454" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492778454">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492778454" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492778454" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492778454" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492778454" style="display:none">
+      <textarea class="nota-input" id="nota-1492778454" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492778454">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492778454"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1492776755" id="card-1492776755">
   <div class="card-header" style="background:#059669">
     <span class="card-num">67</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1487,13 +2248,24 @@
     <div class="badges"><span class="badge">📐 1501m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 330.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-condominio-fechado-de-alto-padrao-1-501m-1492776755" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-condominio-fechado-de-alto-padrao-1-501m-1492776755" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492776755">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492776755" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492776755" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492776755" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492776755" style="display:none">
+      <textarea class="nota-input" id="nota-1492776755" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492776755">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492776755"></div>
   </div>
 </div>
-<div class="card" data-cat="Comércio e indústria" data-tipo="">
+<div class="card" data-cat="Comércio e indústria" data-tipo="" data-id="1460416790" id="card-1460416790">
   <div class="card-header" style="background:#374151">
     <span class="card-num">68</span>
     <span class="card-cat">📋 Comércio e indústria</span>
@@ -1508,13 +2280,24 @@
     <div class="badges"><span class="badge">📐 464m²</span><span class="badge">🚗 5 ou mais vagas</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#374151">R$ 2.400.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/imovel-comercial-e-residencial-av-pio-xii-1460416790" target="_blank" class="btn-ver" style="background:#374151">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/comercio-e-industria/imovel-comercial-e-residencial-av-pio-xii-1460416790" target="_blank" class="btn-ver" style="background:#374151">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1460416790">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1460416790" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1460416790" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1460416790" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1460416790" style="display:none">
+      <textarea class="nota-input" id="nota-1460416790" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1460416790">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1460416790"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1492528394" id="card-1492528394">
   <div class="card-header" style="background:#059669">
     <span class="card-num">69</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1529,13 +2312,24 @@
     <div class="badges"><span class="badge">📐 2100m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 150.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-de-terreno-de-2-100m-no-condominio-recanto-dos-ipes-1492528394" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-de-terreno-de-2-100m-no-condominio-recanto-dos-ipes-1492528394" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492528394">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492528394" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492528394" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492528394" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492528394" style="display:none">
+      <textarea class="nota-input" id="nota-1492528394" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492528394">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492528394"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1492369905" id="card-1492369905">
   <div class="card-header" style="background:#059669">
     <span class="card-num">70</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1550,13 +2344,24 @@
     <div class="badges"><span class="badge">📐 300m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 85.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/oportunidade-imperdivel-lotes-venda-1492369905" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/oportunidade-imperdivel-lotes-venda-1492369905" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1492369905">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1492369905" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1492369905" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1492369905" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1492369905" style="display:none">
+      <textarea class="nota-input" id="nota-1492369905" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1492369905">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1492369905"></div>
   </div>
 </div>
-<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos">
+<div class="card" data-cat="Terrenos, sítios e fazendas" data-tipo="Terrenos" data-id="1484944708" id="card-1484944708">
   <div class="card-header" style="background:#059669">
     <span class="card-num">71</span>
     <span class="card-cat">🌾 Terrenos, sítios e fazendas</span>
@@ -1571,10 +2376,21 @@
     <div class="badges"><span class="badge">📐 360m²</span></div>
     <div class="card-footer">
       <span class="preco" style="color:#059669">R$ 110.000</span>
-      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-bela-vista-de-goias-av-18-las-vegas-1484944708" target="_blank" class="btn-ver" style="background:#059669">
-        Ver anúncio →
-      </a>
+      <a href="https://go.olx.com.br/grande-goiania-e-anapolis/terrenos/lote-em-bela-vista-de-goias-av-18-las-vegas-1484944708" target="_blank" class="btn-ver" style="background:#059669">Ver anúncio →</a>
     </div>
+    <div class="status-bar" id="status-1484944708">
+      <span class="status-label">Contato:</span>
+      <div class="status-btns">
+        <button class="sbtn" data-id="1484944708" data-status="contato" title="Contato feito">📞 Contatado</button>
+        <button class="sbtn" data-id="1484944708" data-status="interesse" title="Tem interesse">✅ Tem interesse</button>
+        <button class="sbtn" data-id="1484944708" data-status="sem_interesse" title="Sem interesse">❌ Sem interesse</button>
+      </div>
+    </div>
+    <div class="nota-area" id="nota-area-1484944708" style="display:none">
+      <textarea class="nota-input" id="nota-1484944708" placeholder="Observações sobre o contato..." rows="2"></textarea>
+      <button class="nota-salvar" data-id="1484944708">Salvar nota</button>
+    </div>
+    <div class="nota-view" id="nota-view-1484944708"></div>
   </div>
 </div>
 </div>
@@ -1582,22 +2398,103 @@
 <div class="vazio" id="vazio">Nenhum imóvel encontrado para este filtro.</div>
 
 <script>
+  const STORAGE_KEY = 'imoveis_status_bv';
   const cards = Array.from(document.querySelectorAll('.card'));
   const busca = document.getElementById('busca');
   const countInfo = document.getElementById('count-info');
   const totalBadge = document.getElementById('total-badge');
   let catAtiva = 'todos';
+  let statusFiltro = 'todos';
 
+  // ── localStorage ─────────────────────────────────────────
+  function loadData() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+  function saveData(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // ── Aplicar status salvo ao carregar ─────────────────────
+  function aplicarEstados() {
+    const data = loadData();
+    cards.forEach(card => {
+      const id = card.dataset.id;
+      const entry = data[id];
+      if (!entry) return;
+      aplicarStatus(card, entry.status);
+      if (entry.nota) mostrarNota(id, entry.nota);
+    });
+  }
+
+  function aplicarStatus(card, status) {
+    const id = card.dataset.id;
+    card.dataset.status = status;
+    card.querySelectorAll('.sbtn').forEach(b => {
+      b.classList.remove('ativo-contato', 'ativo-interesse', 'ativo-sem_interesse');
+      if (b.dataset.status === status) b.classList.add('ativo-' + status);
+    });
+    // Mostra área de nota ao ter qualquer status
+    const notaArea = document.getElementById('nota-area-' + id);
+    if (notaArea) notaArea.style.display = status ? 'flex' : 'none';
+  }
+
+  function mostrarNota(id, texto) {
+    const el = document.getElementById('nota-view-' + id);
+    const input = document.getElementById('nota-' + id);
+    if (el && texto) {
+      el.textContent = '💬 ' + texto;
+      el.style.display = 'block';
+    }
+    if (input) input.value = texto || '';
+  }
+
+  // ── Clique nos botões de status ───────────────────────────
+  document.addEventListener('click', e => {
+    // Botão de status
+    if (e.target.classList.contains('sbtn')) {
+      const id = e.target.dataset.id;
+      const novoStatus = e.target.dataset.status;
+      const card = document.getElementById('card-' + id);
+      const data = loadData();
+
+      // Toggle: clicou no mesmo → remove status
+      const atual = (data[id] || {}).status;
+      const status = atual === novoStatus ? '' : novoStatus;
+
+      data[id] = { ...(data[id] || {}), status };
+      saveData(data);
+      aplicarStatus(card, status);
+      filtrar();
+    }
+
+    // Salvar nota
+    if (e.target.classList.contains('nota-salvar')) {
+      const id = e.target.dataset.id;
+      const texto = document.getElementById('nota-' + id).value.trim();
+      const data = loadData();
+      data[id] = { ...(data[id] || {}), nota: texto };
+      saveData(data);
+      mostrarNota(id, texto);
+    }
+  });
+
+  // ── Filtrar ───────────────────────────────────────────────
   function filtrar() {
     const termo = busca.value.toLowerCase();
+    const data = loadData();
     let visiveis = 0;
 
     cards.forEach(c => {
       const cat = c.dataset.cat || '';
       const texto = c.innerText.toLowerCase();
-      const matchCat = catAtiva === 'todos' || cat === catAtiva;
-      const matchBusca = !termo || texto.includes(termo);
-      if (matchCat && matchBusca) {
+      const cardStatus = (data[c.dataset.id] || {}).status || 'pendente';
+
+      const matchCat    = catAtiva === 'todos' || cat === catAtiva;
+      const matchBusca  = !termo || texto.includes(termo);
+      const matchStatus = statusFiltro === 'todos' || cardStatus === statusFiltro;
+
+      if (matchCat && matchBusca && matchStatus) {
         c.classList.remove('oculto');
         visiveis++;
       } else {
@@ -1620,6 +2517,19 @@
       filtrar();
     });
   });
+
+  document.querySelectorAll('.sfiltro').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sfiltro').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      statusFiltro = btn.dataset.sf;
+      filtrar();
+    });
+  });
+
+  // Inicializa
+  aplicarEstados();
+  filtrar();
 </script>
 </body>
 </html>

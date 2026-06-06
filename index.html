@@ -94,7 +94,7 @@
 <div class="header">
   <div class="header-left">
     <h1>Imóveis OLX — Bela Vista de Goiás</h1>
-    <p>Atualizado em 06/06/2026 13:08</p>
+    <p>Atualizado em 06/06/2026 13:19</p>
   </div>
   <div class="header-right">
     <span class='db-info'>Total no banco: 71 imóveis</span>
@@ -2398,7 +2398,15 @@
 <div class="vazio" id="vazio">Nenhum imóvel encontrado para este filtro.</div>
 
 <script>
-  const STORAGE_KEY = 'imoveis_status_bv';
+  const SB_URL = 'https://yffpeuqmwwzbhbyesacf.supabase.co';
+  const SB_KEY = 'sb_publishable_JHKOuRax2EQGz0Vq0TukCQ_T7QX2BfT';
+  const SB_HEADERS = {
+    'apikey': SB_KEY,
+    'Authorization': 'Bearer ' + SB_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'resolution=merge-duplicates'
+  };
+
   const cards = Array.from(document.querySelectorAll('.card'));
   const busca = document.getElementById('busca');
   const countInfo = document.getElementById('count-info');
@@ -2406,35 +2414,35 @@
   let catAtiva = 'todos';
   let statusFiltro = 'todos';
 
-  // ── localStorage ─────────────────────────────────────────
-  function loadData() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-    catch { return {}; }
-  }
-  function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Cache local para evitar chamadas repetidas
+  let cache = {};
+
+  // ── Supabase ──────────────────────────────────────────────
+  async function sbGet() {
+    const r = await fetch(`${SB_URL}/rest/v1/status_imoveis?select=*`, { headers: SB_HEADERS });
+    const rows = await r.json();
+    cache = {};
+    (rows || []).forEach(row => cache[row.id] = row);
+    return cache;
   }
 
-  // ── Aplicar status salvo ao carregar ─────────────────────
-  function aplicarEstados() {
-    const data = loadData();
-    cards.forEach(card => {
-      const id = card.dataset.id;
-      const entry = data[id];
-      if (!entry) return;
-      aplicarStatus(card, entry.status);
-      if (entry.nota) mostrarNota(id, entry.nota);
+  async function sbUpsert(id, campos) {
+    cache[id] = { ...(cache[id] || {id}), ...campos };
+    await fetch(`${SB_URL}/rest/v1/status_imoveis`, {
+      method: 'POST',
+      headers: SB_HEADERS,
+      body: JSON.stringify({ id, updated_at: new Date().toISOString(), ...campos })
     });
   }
 
+  // ── Aplicar estado nos cards ──────────────────────────────
   function aplicarStatus(card, status) {
     const id = card.dataset.id;
-    card.dataset.status = status;
+    card.dataset.status = status || '';
     card.querySelectorAll('.sbtn').forEach(b => {
       b.classList.remove('ativo-contato', 'ativo-interesse', 'ativo-sem_interesse');
-      if (b.dataset.status === status) b.classList.add('ativo-' + status);
+      if (status && b.dataset.status === status) b.classList.add('ativo-' + status);
     });
-    // Mostra área de nota ao ter qualquer status
     const notaArea = document.getElementById('nota-area-' + id);
     if (notaArea) notaArea.style.display = status ? 'flex' : 'none';
   }
@@ -2442,66 +2450,59 @@
   function mostrarNota(id, texto) {
     const el = document.getElementById('nota-view-' + id);
     const input = document.getElementById('nota-' + id);
-    if (el && texto) {
-      el.textContent = '💬 ' + texto;
-      el.style.display = 'block';
-    }
+    if (el) { el.textContent = texto ? '💬 ' + texto : ''; el.style.display = texto ? 'block' : 'none'; }
     if (input) input.value = texto || '';
   }
 
-  // ── Clique nos botões de status ───────────────────────────
-  document.addEventListener('click', e => {
-    // Botão de status
+  function aplicarTodos() {
+    cards.forEach(card => {
+      const entry = cache[card.dataset.id];
+      if (!entry) return;
+      aplicarStatus(card, entry.status);
+      mostrarNota(card.dataset.id, entry.nota);
+    });
+    filtrar();
+  }
+
+  // ── Eventos ───────────────────────────────────────────────
+  document.addEventListener('click', async e => {
     if (e.target.classList.contains('sbtn')) {
       const id = e.target.dataset.id;
       const novoStatus = e.target.dataset.status;
       const card = document.getElementById('card-' + id);
-      const data = loadData();
-
-      // Toggle: clicou no mesmo → remove status
-      const atual = (data[id] || {}).status;
+      const atual = (cache[id] || {}).status || '';
       const status = atual === novoStatus ? '' : novoStatus;
 
-      data[id] = { ...(data[id] || {}), status };
-      saveData(data);
+      e.target.disabled = true;
+      await sbUpsert(id, { status });
       aplicarStatus(card, status);
+      e.target.disabled = false;
       filtrar();
     }
 
-    // Salvar nota
     if (e.target.classList.contains('nota-salvar')) {
       const id = e.target.dataset.id;
-      const texto = document.getElementById('nota-' + id).value.trim();
-      const data = loadData();
-      data[id] = { ...(data[id] || {}), nota: texto };
-      saveData(data);
-      mostrarNota(id, texto);
+      const nota = document.getElementById('nota-' + id).value.trim();
+      e.target.textContent = '...';
+      await sbUpsert(id, { nota });
+      mostrarNota(id, nota);
+      e.target.textContent = 'Salvar nota';
     }
   });
 
   // ── Filtrar ───────────────────────────────────────────────
   function filtrar() {
     const termo = busca.value.toLowerCase();
-    const data = loadData();
     let visiveis = 0;
-
     cards.forEach(c => {
-      const cat = c.dataset.cat || '';
-      const texto = c.innerText.toLowerCase();
-      const cardStatus = (data[c.dataset.id] || {}).status || 'pendente';
-
-      const matchCat    = catAtiva === 'todos' || cat === catAtiva;
-      const matchBusca  = !termo || texto.includes(termo);
+      const cardStatus = (cache[c.dataset.id] || {}).status || 'pendente';
+      const matchCat    = catAtiva === 'todos' || c.dataset.cat === catAtiva;
+      const matchBusca  = !termo || c.innerText.toLowerCase().includes(termo);
       const matchStatus = statusFiltro === 'todos' || cardStatus === statusFiltro;
-
-      if (matchCat && matchBusca && matchStatus) {
-        c.classList.remove('oculto');
-        visiveis++;
-      } else {
-        c.classList.add('oculto');
-      }
+      const visivel = matchCat && matchBusca && matchStatus;
+      c.classList.toggle('oculto', !visivel);
+      if (visivel) visiveis++;
     });
-
     countInfo.textContent = `Exibindo ${visiveis} de ${cards.length} imóveis`;
     totalBadge.textContent = visiveis + ' imóveis';
     document.getElementById('vazio').style.display = visiveis === 0 ? 'block' : 'none';
@@ -2527,9 +2528,8 @@
     });
   });
 
-  // Inicializa
-  aplicarEstados();
-  filtrar();
+  // ── Init ──────────────────────────────────────────────────
+  sbGet().then(aplicarTodos);
 </script>
 </body>
 </html>
